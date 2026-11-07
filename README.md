@@ -1,14 +1,17 @@
 # FYNZA — Rose Boutique
 
-React / Express / tRPC / Drizzle starter, adapted from the Sandbox web-db-user template.
+A responsive Botswana clothing storefront built from the approved rose, burgundy and warm-cream concept. The homepage includes a silent fashion-video background, a stock grid immediately beneath it, category/size/search filters, product details and WhatsApp inquiries to **+267 75 388 058**.
 
-- `pnpm dev`: development server; honors `PORT` (default 3000).
-- `pnpm build` / `pnpm start`: build and serve `dist/index.js` and `dist/public/`.
-- `pnpm db:migrate`: apply checked-in migrations. `pnpm db:push`: generate and apply new schema changes.
-- `pnpm check` / `pnpm test`: types and application tests.
+## Run and build
 
-Start with the Webdev skill's default-template guide. Platform login, storage, payments and service contracts live in its shared references; read the relevant capability before extending its helper.
+Use Node.js 22+ and the pinned pnpm 10.18.0 toolchain. Run `pnpm install --frozen-lockfile`, then `pnpm dev:static` to develop on port 3000. Run `pnpm check`, `pnpm test`, and `pnpm build:static`. Deploy `dist/public` on any static web host. No database, login, payment gateway or backend credentials are required for this storefront.
 
-`server/_core/publicConfig.ts` exposes only named public runtime values. Private keys stay server-side. The platform serves managed `/manus-storage/` assets; the application does not register a second proxy.
+## Replace the example stock before live trading
 
-Platform configuration is readable and editable through `webdev.config`. Default settings are initial values, not enforced constraints. The agent may modify the files, commands and configuration or follow the flexible guide for another stack.
+All four products, photographs, prices, sizes and stock statuses are illustrative and explicitly labelled as such on the website. Update `client/src/lib/catalogue.ts` with actual inventory and replace the files under `client/public/images`. WhatsApp links ask sales to confirm the actual item, price and availability; the site does not accept payments or promise delivery terms. The demo is marked noindex so unconfirmed products are not deliberately indexed by search engines.
+
+## Project layout
+
+`client/src/pages/Home.tsx` assembles the storefront. `components/BoutiqueHero.tsx` contains the logo, navigation and accessible video controls. `components/ProductCard.tsx` handles size selection and product dialogs. `lib/catalogue.ts` is the stock and sales-contact source. `index.css` owns the responsive boutique design. `scripts/prerender.tsx` includes homepage content in the static HTML for link previews. Local asset copies are included so the repository remains portable; managed asset URLs fall back to those local files.
+
+The supplied original FYNZA logo is retained at `client/public/images/fynza-original.jpg`. The header uses a crop of its complete circular seal, not a replacement brand mark. Motion defaults include muted playback, a pause/play control, a static-poster fallback and reduced-motion support.
