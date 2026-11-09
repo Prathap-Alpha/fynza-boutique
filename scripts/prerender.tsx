@@ -3,7 +3,7 @@ import { renderToString } from "react-dom/server";
 import { readFileSync, writeFileSync } from "node:fs";
 import Home from "../client/src/pages/Home";
 
-// The site contains only public illustrative catalogue data; no customer data.
+// The site contains only public catalogue data; no customer data.
 const output = "dist/public/index.html";
 const html = readFileSync(output, "utf8");
 const markup = renderToString(<Home />);

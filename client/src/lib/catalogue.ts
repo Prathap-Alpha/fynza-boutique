@@ -10,60 +10,62 @@ export const brand = {
   videoFallback: "/images/fynza-fashion-film.mp4",
 };
 
-export type Category = "Dresses" | "Tops" | "Sets";
+export type Category = "Tops";
 export type Product = {
   id: string;
   name: string;
   category: Category;
   price: number;
-  sizes: string[];
-  status: "In stock" | "Low stock";
+  status: "In stock";
   colour: string;
   description: string;
   image: string;
   localImage: string;
+  originalImage: string;
+  alt: string;
 };
 
-/** All inventory is illustrative until the business supplies its actual stock. */
 export const products: Product[] = [
   {
-    id: "satin-dress", name: "Satin Dress", category: "Dresses", price: 450,
-    sizes: ["S", "M", "L"], status: "In stock", colour: "Burgundy",
-    description: "An elegant burgundy satin look with soft draping. Shown as an example of the FYNZA collection; please confirm the actual garment, fit and price with sales.",
-    image: "/manus-storage/01-satin-dress_a2730f45.webp", localImage: "/images/01-satin-dress.webp",
+    id: "lace-hem-halter-top-chocolate",
+    name: "Lace-Hem Halter Top",
+    category: "Tops",
+    price: 270,
+    status: "In stock",
+    colour: "Chocolate",
+    description: "A near-black chocolate halter top with a halter neckline, loose drape and wide floral lace hem. Please confirm your size availability and delivery details with FYNZA on WhatsApp.",
+    image: "/manus-storage/fynza-chocolate-hd_f9afe082.webp",
+    localImage: "/images/fynza-chocolate-hd.webp",
+    originalImage: "/images/fynza-chocolate-original.jpg",
+    alt: "Near-black chocolate Lace-Hem Halter Top with a loose drape and wide floral lace hem",
   },
   {
-    id: "rose-blouse", name: "Rose Blouse", category: "Tops", price: 280,
-    sizes: ["S", "M", "L"], status: "In stock", colour: "Dusty rose",
-    description: "A soft rose blouse styled for everyday elegance. This photograph and price illustrate the store design, not confirmed stock.",
-    image: "/manus-storage/02-rose-blouse_953509ab.webp", localImage: "/images/02-rose-blouse.webp",
-  },
-  {
-    id: "tailored-set", name: "Tailored Set", category: "Sets", price: 650,
-    sizes: ["M", "L", "XL"], status: "Low stock", colour: "Wine",
-    description: "A coordinated wine-coloured tailored look. Ask FYNZA to confirm current stock, available sizes and the final price before ordering.",
-    image: "/manus-storage/03-tailored-set_8cb9d7ee.webp", localImage: "/images/03-tailored-set.webp",
-  },
-  {
-    id: "everyday-dress", name: "Everyday Dress", category: "Dresses", price: 350,
-    sizes: ["S", "M", "L"], status: "In stock", colour: "Rose floral",
-    description: "A relaxed floral dress for your everyday wardrobe. This is an illustrative catalogue item; please confirm the real product and availability with sales.",
-    image: "/manus-storage/04-everyday-dress_5bc3765c.webp", localImage: "/images/04-everyday-dress.webp",
+    id: "lace-hem-halter-top-pale-yellow",
+    name: "Lace-Hem Halter Top",
+    category: "Tops",
+    price: 270,
+    status: "In stock",
+    colour: "Pale Yellow",
+    description: "A pale butter-yellow halter top with a halter neckline, loose drape and wide floral lace hem. Please confirm your size availability and delivery details with FYNZA on WhatsApp.",
+    image: "/manus-storage/fynza-yellow-hd_d243a327.webp",
+    localImage: "/images/fynza-yellow-hd.webp",
+    originalImage: "/images/fynza-yellow-original.jpg",
+    alt: "Pale butter-yellow Lace-Hem Halter Top with a loose drape and wide floral lace hem",
   },
 ];
 
-export function whatsappUrl(product?: Product, size?: string) {
+export function whatsappUrl(product?: Product) {
   const text = product
-    ? `Hi FYNZA! I saw the ${product.name} (${product.colour}) in your demo catalogue${size ? `, size ${size}` : ""}. The illustrative price is P${product.price}. Please confirm the actual product, current stock, available sizes and final price before I order.`
-    : "Hi FYNZA! I'd like to browse your clothing collection. Please share current stock, sizes and prices.";
+    ? `Hi FYNZA! I'm interested in the ${product.name} (${product.colour}) at BWP ${product.price}. Please confirm size availability and delivery.`
+    : "Hi FYNZA! I'd like to ask about the current Lace-Hem Halter Top stock. Please confirm available sizes and delivery options.";
   return `https://wa.me/${SALES_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 
-export function filterProducts(category: string, size: string, query: string, sort: string) {
+export function filterProducts(category: string, colour: string, query: string, sort: string) {
   const filtered = products.filter(product =>
     (category === "All" || product.category === category) &&
-    (size === "All sizes" || product.sizes.includes(size)) &&
-    `${product.name} ${product.colour} ${product.category}`.toLowerCase().includes(query.trim().toLowerCase()),
+    (colour === "All colours" || product.colour === colour) &&
+    `${product.name} ${product.colour} ${product.category} ${product.description} ${product.alt}`.toLowerCase().includes(query.trim().toLowerCase()),
   );
   if (sort === "price-asc") filtered.sort((a, b) => a.price - b.price);
   if (sort === "price-desc") filtered.sort((a, b) => b.price - a.price);
